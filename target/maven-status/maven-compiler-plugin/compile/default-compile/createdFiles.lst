@@ -1,1 +1,8 @@
-com\project\Main.class
+com/project/Main.class
+com/project/Classes/Lloguer.class
+com/project/Classes/Empleat.class
+com/project/Classes/Empresa.class
+com/project/Classes/Vehicle.class
+com/project/Classes/Client.class
+com/project/Classes/Persona.class
+com/project/TestingFile.class
