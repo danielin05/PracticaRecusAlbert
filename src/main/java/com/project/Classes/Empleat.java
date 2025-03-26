@@ -34,7 +34,7 @@ public class Empleat extends Persona{
 
     @Override
     public String toString() {
-        return "Client [sexe = " + sexe + ", nom = " + nom + ", cognom = " + cognom + ", dni = " + dni + ", num_telf = "
+        return "Empleat [id = " + id + ", sexe = " + sexe + ", nom = " + nom + ", cognom = " + cognom + ", dni = " + dni + ", num_telf = "
                 + num_telf + ", edat = " + edat + ", carrec = " + carrec + ", anys_empresa = " + anys_empresa + ", contractat = " + contractat + "]";
     }
 }

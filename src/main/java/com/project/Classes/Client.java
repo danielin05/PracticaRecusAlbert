@@ -23,9 +23,13 @@ public class Client extends Persona{
         this.te_lloguer = te_lloguer;
     }
 
+    public void incrementa_lloguer(){
+        vegades_lloguer++;
+    }
+    
     @Override
     public String toString() {
-        return "Client [sexe = " + sexe + ", nom = " + nom + ", cognom = " + cognom + ", dni = " + dni + ", num_telf = "
+        return "Client [id = " + id + ", sexe = " + sexe + ", nom = " + nom + ", cognom = " + cognom + ", dni = " + dni + ", num_telf = "
                 + num_telf + ", edat = " + edat + ", te_lloguer = " + te_lloguer + ", vegades_lloguer = " + vegades_lloguer + "]";
     }
     

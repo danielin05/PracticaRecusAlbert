@@ -1,12 +1,15 @@
 package com.project.Classes;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 public class Lloguer {
     private int id;
     private String dataInici, dataFi;
     private Vehicle vehicle;
     private Client client;
     private Empleat empleat;
-    private float preu_total;
 
 
     public Lloguer(int id, Client client, Empleat empleat, Vehicle vehicle, String dataInici, String dataFi) {
@@ -67,17 +70,29 @@ public class Lloguer {
     }
 
     public float getPreu_total() {
-        return preu_total;
+        return calcula_preu_total();
     }
 
-    public void setPreu_total(float preu_total) {
-        this.preu_total = preu_total;
+    private float calcula_preu_total(){
+        return vehicle.preu_dia * calcular_dies(dataInici, dataFi);
+    }
+
+    private static long calcular_dies(String dataInici, String dataFi) {
+        // Define el formato de la fecha
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Convierte las cadenas de texto en objetos LocalDate
+        LocalDate inicio = LocalDate.parse(dataInici, formatter);
+        LocalDate fin = LocalDate.parse(dataFi, formatter);
+
+        // Calcula la diferencia en días
+        return ChronoUnit.DAYS.between(inicio, fin);
     }
 
     @Override
     public String toString() {
         return "Lloguer [id = " + id + ", dataInici = " + dataInici + ", dataFi = " + dataFi + ", vehicle = " + vehicle
-                + ", client = " + client +  ", empleat = " + empleat + ", preu_total = " + preu_total + "]";
+                + ", client = " + client +  ", empleat = " + empleat + ", preu_total = " + getPreu_total() + "]";
     }
 
 }

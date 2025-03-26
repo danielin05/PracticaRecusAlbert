@@ -63,8 +63,8 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "Persona [sexe = " + sexe + ", nom = " + nom + ", cognom = " + cognom + ", dni = " + dni + ", num_telf = "
-                + num_telf + ", edat = " + edat + "]";
+        return "Persona [id = " + id + ", sexe = " + sexe + ", nom = " + nom + ", cognom = " + cognom + ", dni = " + dni
+                + ", num_telf = " + num_telf + ", edat = " + edat + "]";
     }
 
 }

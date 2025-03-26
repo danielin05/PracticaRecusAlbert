@@ -1,0 +1,62 @@
+[
+  {
+    "sexe": "Home",
+    "nom": "Francesc",
+    "cognom": "Puig",
+    "dni": "12345678M",
+    "id": 1,
+    "num_telf": 612345680,
+    "edat": 45,
+    "carrec": "Venedor",
+    "anys_empresa": 15,
+    "contractat": true
+  },
+  {
+    "sexe": "Dona",
+    "nom": "Teresa",
+    "cognom": "Sola",
+    "dni": "23456789N",
+    "id": 2,
+    "num_telf": 622345680,
+    "edat": 34,
+    "carrec": "Venedor",
+    "anys_empresa": 8,
+    "contractat": true
+  },
+  {
+    "sexe": "Home",
+    "nom": "Xavier",
+    "cognom": "Ferrer",
+    "dni": "34567890P",
+    "id": 3,
+    "num_telf": 632345680,
+    "edat": 40,
+    "carrec": "Venedor",
+    "anys_empresa": 12,
+    "contractat": true
+  },
+  {
+    "sexe": "Dona",
+    "nom": "Núria",
+    "cognom": "Blasco",
+    "dni": "45678901O",
+    "id": 4,
+    "num_telf": 642345680,
+    "edat": 28,
+    "carrec": "Venedor",
+    "anys_empresa": 5,
+    "contractat": true
+  },
+  {
+    "sexe": "Home",
+    "nom": "Joan",
+    "cognom": "Serra",
+    "dni": "56789012N",
+    "id": 5,
+    "num_telf": 652345680,
+    "edat": 37,
+    "carrec": "Venedor",
+    "anys_empresa": 10,
+    "contractat": true
+  }
+]

@@ -1,0 +1,112 @@
+[
+  {
+    "sexe": "Home",
+    "nom": "Marc",
+    "cognom": "Castro",
+    "dni": "12345678Z",
+    "id": 1,
+    "num_telf": 612345679,
+    "edat": 32,
+    "vegades_lloguer": 5,
+    "te_lloguer": false
+  },
+  {
+    "sexe": "Dona",
+    "nom": "Elena",
+    "cognom": "Giménez",
+    "dni": "23456789X",
+    "id": 2,
+    "num_telf": 622345679,
+    "edat": 29,
+    "vegades_lloguer": 2,
+    "te_lloguer": true
+  },
+  {
+    "sexe": "Home",
+    "nom": "Jordi",
+    "cognom": "Martínez",
+    "dni": "34567890Y",
+    "id": 3,
+    "num_telf": 632345679,
+    "edat": 41,
+    "vegades_lloguer": 7,
+    "te_lloguer": false
+  },
+  {
+    "sexe": "Dona",
+    "nom": "Laura",
+    "cognom": "Fernández",
+    "dni": "45678901W",
+    "id": 4,
+    "num_telf": 642345679,
+    "edat": 25,
+    "vegades_lloguer": 3,
+    "te_lloguer": false
+  },
+  {
+    "sexe": "Home",
+    "nom": "Pere",
+    "cognom": "Vilaplana",
+    "dni": "56789012V",
+    "id": 5,
+    "num_telf": 652345679,
+    "edat": 38,
+    "vegades_lloguer": 8,
+    "te_lloguer": true
+  },
+  {
+    "sexe": "Dona",
+    "nom": "Maria",
+    "cognom": "Sánchez",
+    "dni": "67890123U",
+    "id": 6,
+    "num_telf": 662345679,
+    "edat": 27,
+    "vegades_lloguer": 1,
+    "te_lloguer": false
+  },
+  {
+    "sexe": "Home",
+    "nom": "Albert",
+    "cognom": "Torres",
+    "dni": "78901234T",
+    "id": 7,
+    "num_telf": 672345679,
+    "edat": 50,
+    "vegades_lloguer": 10,
+    "te_lloguer": true
+  },
+  {
+    "sexe": "Dona",
+    "nom": "Clara",
+    "cognom": "Ortega",
+    "dni": "89012345S",
+    "id": 8,
+    "num_telf": 682345679,
+    "edat": 31,
+    "vegades_lloguer": 6,
+    "te_lloguer": false
+  },
+  {
+    "sexe": "Home",
+    "nom": "Ricard",
+    "cognom": "López",
+    "dni": "90123456R",
+    "id": 9,
+    "num_telf": 692345679,
+    "edat": 45,
+    "vegades_lloguer": 4,
+    "te_lloguer": true
+  },
+  {
+    "sexe": "Dona",
+    "nom": "Sara",
+    "cognom": "Navarro",
+    "dni": "01234567Q",
+    "id": 10,
+    "num_telf": 602345679,
+    "edat": 22,
+    "vegades_lloguer": 2,
+    "te_lloguer": false
+  }
+]

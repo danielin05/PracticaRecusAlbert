@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "kilometratge": 50000,
+    "vegades_llogat": 10,
+    "marca": "Toyota",
+    "model": "Cotxe",
+    "matricula": "1234ABC",
+    "preu_dia": 35.5,
+    "esta_llogat": false
+  },
+  {
+    "id": 2,
+    "kilometratge": 30000,
+    "vegades_llogat": 5,
+    "marca": "Ford",
+    "model": "Cotxe",
+    "matricula": "2345BCD",
+    "preu_dia": 40.0,
+    "esta_llogat": true
+  },
+  {
+    "id": 3,
+    "kilometratge": 15000,
+    "vegades_llogat": 3,
+    "marca": "BMW",
+    "model": "Cotxe",
+    "matricula": "3456CDE",
+    "preu_dia": 75.0,
+    "esta_llogat": false
+  },
+  {
+    "id": 4,
+    "kilometratge": 25000,
+    "vegades_llogat": 7,
+    "marca": "Audi",
+    "model": "Cotxe",
+    "matricula": "4567DEF",
+    "preu_dia": 60.0,
+    "esta_llogat": true
+  },
+  {
+    "id": 5,
+    "kilometratge": 10000,
+    "vegades_llogat": 2,
+    "marca": "Mercedes",
+    "model": "Cotxe",
+    "matricula": "5678EFG",
+    "preu_dia": 80.0,
+    "esta_llogat": false
+  },
+  {
+    "id": 6,
+    "kilometratge": 40000,
+    "vegades_llogat": 12,
+    "marca": "Harley-Davidson",
+    "model": "Moto",
+    "matricula": "6789FGH",
+    "preu_dia": 30.0,
+    "esta_llogat": true
+  },
+  {
+    "id": 7,
+    "kilometratge": 5000,
+    "vegades_llogat": 1,
+    "marca": "Yamaha",
+    "model": "Moto",
+    "matricula": "7890GHI",
+    "preu_dia": 45.0,
+    "esta_llogat": false
+  },
+  {
+    "id": 8,
+    "kilometratge": 20000,
+    "vegades_llogat": 4,
+    "marca": "Kawasaki",
+    "model": "Moto",
+    "matricula": "8901HIJ",
+    "preu_dia": 50.0,
+    "esta_llogat": true
+  },
+  {
+    "id": 9,
+    "kilometratge": 60000,
+    "vegades_llogat": 15,
+    "marca": "Suzuki",
+    "model": "Moto",
+    "matricula": "9012IJK",
+    "preu_dia": 55.0,
+    "esta_llogat": false
+  },
+  {
+    "id": 10,
+    "kilometratge": 8000,
+    "vegades_llogat": 2,
+    "marca": "Honda",
+    "model": "Moto",
+    "matricula": "0123JKL",
+    "preu_dia": 32.5,
+    "esta_llogat": true
+  }
+]
