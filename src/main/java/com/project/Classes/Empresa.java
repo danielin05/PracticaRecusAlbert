@@ -16,6 +16,13 @@ public class Empresa {
         this.llistaEmpleats = new ArrayList<>();
     }
 
+    public Empresa(List<Client> llistaClients, List<Vehicle> llistaVehicles, List<Lloguer> llistaLloguers, List<Empleat> llistaEmpleats) {
+        this.llistaClients  = llistaClients;
+        this.llistaVehicles = llistaVehicles;
+        this.llistaLloguers = llistaLloguers;
+        this.llistaEmpleats = llistaEmpleats;
+    }
+
     public List<Client> getLlistaClients() {
         return llistaClients;
     }

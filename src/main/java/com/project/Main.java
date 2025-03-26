@@ -11,7 +11,10 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.project.Classes.Empleat;
+import com.project.Classes.Empresa;
+import com.project.Classes.Lloguer;
 import com.project.Classes.Vehicle;
+import com.project.Classes.Client;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
@@ -23,6 +26,7 @@ public class Main {
 
     private final File dataFile;
     private JsonObject jsonObject;
+    public Empresa empresa = new Empresa(carregar_clients(false), carregar_vehicles(false), carregar_lloguers(false), carregar_empleats(false));
 
         /**
      * Constructor de la classe PR14GestioLlibreriaJSONPMain.
@@ -333,6 +337,22 @@ public class Main {
             }
         }         
     }
+    public void mostrar_clients(boolean nomes_disponibles){
+        List<Client> clients = carregar_clients(nomes_disponibles);
+        if (clients != null) {
+            for(Client client : clients){
+                System.out.println(client.toString());
+            }
+        }         
+    }
+    public void mostrar_lloguers(boolean nomes_disponibles){
+        List<Lloguer> lloguers = carregar_lloguers(nomes_disponibles);
+        if (lloguers != null) {
+            for(Lloguer lloguer : lloguers){
+                System.out.println(lloguer.toString());
+            }
+        }         
+    }
     
     // FUNCIONES PARA CARGAR LOS JSON EN LISTAS DE OBJETOS
     public List<Vehicle> carregar_vehicles(boolean nomes_disponibles) {
@@ -382,6 +402,30 @@ public class Main {
             }
         }
         return empleats;
+    }
+
+    // FUNCIONES PARA CARGAR LOS JSON EN LISTAS DE OBJETOS
+    public List<Lloguer> carregar_lloguers(boolean nomes_disponibles) {
+        List<Lloguer> lloguers = new ArrayList<>();
+        if (jsonObject != null) {
+            JsonArray lloguersArray = jsonObject.getJsonArray("lloguers");
+    
+            for (JsonObject lloguerObject : lloguersArray.getValuesAs(JsonObject.class)) {
+                String sexe = lloguerObject.getString("sexe");
+                String nom = lloguerObject.getString("nom");
+                String cognom = lloguerObject.getString("cognom");
+                String dni = lloguerObject.getString("dni");
+                int id = lloguerObject.getInt("id");
+                int num_telf = lloguerObject.getInt("num_telf");
+                int edat = lloguerObject.getInt("edat");
+                String carrec = lloguerObject.getString("carrec");
+                int anys_empresa = lloguerObject.getInt("anys_empresa");
+                Boolean contractat = lloguerObject.getBoolean("contractat");
+    
+                lloguers.add(new Lloguer(id, client, empleat, vehicle, dataInici, dataFi));
+            }
+        }
+        return lloguers;
     }
 
     // ========== FUNCIONALIDAD DEL PROGRAMA ==========
