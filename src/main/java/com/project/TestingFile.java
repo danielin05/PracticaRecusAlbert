@@ -53,7 +53,7 @@ public class TestingFile {
         System.out.println(empresa.getLlistaLloguers().size());
 
 
-        app.saveJSON(empresa, "src/main/resources/data/test" );
+        app.saveJSON(empresa);
 
     }
 
@@ -166,7 +166,7 @@ public class TestingFile {
        return empresa;
     }
 
-    public void saveJSON(Empresa empresa, String filePath) {
+    public void saveJSON(Empresa empresa) {
     JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
 
     // Guardar clientes
