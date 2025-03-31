@@ -3,6 +3,9 @@ package com.project.Classes;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Lloguer {
     private int id;
@@ -69,11 +72,11 @@ public class Lloguer {
         this.empleat = empleat;
     }
 
-    public float getPreu_total() {
+    public double getPreu_total() {
         return calcula_preu_total();
     }
 
-    private float calcula_preu_total(){
+    private double calcula_preu_total(){
         return vehicle.preu_dia * calcular_dies(dataInici, dataFi);
     }
 
@@ -87,6 +90,18 @@ public class Lloguer {
 
         // Calcula la diferencia en días
         return ChronoUnit.DAYS.between(inicio, fin);
+    }
+
+    public Map<String, Object> toJson() {
+        Map<String, Object> json = new LinkedHashMap();
+        json.put("id", id);
+        json.put("dataInici", dataInici);
+        json.put("dataFi", dataFi);
+        json.put("vehicle", vehicle.toJson());
+        json.put("client", client.toJson());
+        json.put("empleat", empleat.toJson());
+        json.put("preu_total", getPreu_total());
+        return json;
     }
 
     @Override

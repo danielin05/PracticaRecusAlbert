@@ -2,7 +2,10 @@ package com.project;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +17,11 @@ import com.project.Classes.Vehicle;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonReader;
+import jakarta.json.JsonWriter;
 
 public class TestingFile {
     
@@ -34,133 +40,173 @@ public class TestingFile {
     public static void main(String[] args) {
         File dataFile = new File(System.getProperty("user.dir"), "src/main/resources/data" + File.separator + "data.json");
         TestingFile app = new TestingFile(dataFile);
-        app.printar_vehicles();
+        // app.printar_vehicles();     
+        Empresa empresa = app.loadJSON();
+
+
+        System.out.println(empresa.getLlistaClients().size());
+        System.out.println("------------------------------------------------------------------------------------------------------------------");
+        System.out.println(empresa.getLlistaEmpleats().size());
+        System.out.println("------------------------------------------------------------------------------------------------------------------");
+        System.out.println(empresa.getLlistaVehicles().size());
+        System.out.println("------------------------------------------------------------------------------------------------------------------");
+        System.out.println(empresa.getLlistaLloguers().size());
+
+
+        app.saveJSON(empresa, "src/main/resources/data/test" );
+
     }
 
-    /**
-     * Processa el fitxer JSON per carregar, modificar, afegir, esborrar i guardar les dades dels llibres.
-     */
-    public void printar_vehicles() {
-        List<Vehicle> vehicles = carregarVehicles();
-        if (vehicles != null) {
-            for(Vehicle vehicle : vehicles){
-                System.out.println(vehicle.toString());
+    public Empresa loadJSON() {
+        Empresa empresa = new Empresa();
+        List<Client> clients = new ArrayList<>();
+        List<Empleat> empleats = new ArrayList<>();
+        List<Vehicle> vehicles = new ArrayList<>();
+        List<Lloguer> lloguers = new ArrayList<>();
+
+        try (JsonReader jsonReader = Json.createReader(new FileReader(dataFile))) {
+            JsonObject jsonObject = jsonReader.readObject();
+
+            // Cargar clientes
+            JsonArray clientsArray = jsonObject.getJsonArray("clientes");
+            for (JsonObject clientObject : clientsArray.getValuesAs(JsonObject.class)) {
+                clients.add(new Client(
+                        clientObject.getInt("id"),
+                        clientObject.getString("nom"),
+                        clientObject.getString("cognom"),
+                        clientObject.getString("dni"),
+                        clientObject.getString("sexe"),
+                        clientObject.getInt("edat"),
+                        clientObject.getInt("num_telf"),
+                        clientObject.getInt("vegades_lloguer"),
+                        clientObject.getBoolean("te_lloguer")
+                ));
             }
+
+            // Cargar empleados
+            JsonArray empleatsArray = jsonObject.getJsonArray("empleados");
+            for (JsonObject empleatObject : empleatsArray.getValuesAs(JsonObject.class)) {
+                empleats.add(new Empleat(
+                    empleatObject.getInt("id"),
+                    empleatObject.getString("nom"),
+                    empleatObject.getString("cognom"),
+                    empleatObject.getString("dni"),
+                        empleatObject.getString("sexe"),
+                        empleatObject.getInt("edat"),
+                        empleatObject.getInt("num_telf"),
+                        empleatObject.getString("carrec"),
+                        empleatObject.getInt("anys_empresa"),
+                        empleatObject.getBoolean("contractat")
+                ));
+            }
+
+            // Cargar vehículos
+            JsonArray vehiclesArray = jsonObject.getJsonArray("vehiculos");
+            for (JsonObject vehicleObject : vehiclesArray.getValuesAs(JsonObject.class)) {
+                vehicles.add(new Vehicle(
+                        vehicleObject.getInt("id"),
+                        vehicleObject.getInt("kilometratge"),
+                        vehicleObject.getInt("vegades_llogat"),
+                        vehicleObject.getString("marca"),
+                        vehicleObject.getString("model"),
+                        vehicleObject.getString("matricula"),
+                        (float) vehicleObject.getJsonNumber("preu_dia").doubleValue(),
+                        vehicleObject.getBoolean("esta_llogat")
+                ));
+            }
+
+            // Cargar alquileres
+            JsonArray lloguersArray = jsonObject.getJsonArray("lloguers");
+            for (JsonObject lloguerObject : lloguersArray.getValuesAs(JsonObject.class)) {
+                Client client = null;
+                for (Client c : clients) {
+                    if (c.getDni().equals(lloguerObject.getString("client"))) {
+                        client = c;
+                        break;
+                    }
+                }
+
+                Empleat empleat = null;
+                for (Empleat e : empleats) {
+                    if (e.getDni().equals(lloguerObject.getString("empleat"))) {
+                        empleat = e;
+                        break;
+                    }
+                }
+
+                Vehicle vehicle = null;
+                for (Vehicle v : vehicles) {
+                    if (v.getMatricula().equals(lloguerObject.getString("vehicle"))) {
+                        vehicle = v;
+                        break;
+                    }
+                }
+
+                if (client != null && empleat != null && vehicle != null) {
+                    lloguers.add(new Lloguer(
+                            lloguerObject.getInt("id"),
+                            client,
+                            empleat,
+                            vehicle,
+                            lloguerObject.getString("dataInici"),
+                            lloguerObject.getString("dataFi")
+                    ));
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        empresa.setLlistaClients(clients);
+        empresa.setLlistaEmpleats(empleats);
+        empresa.setLlistaLloguers(lloguers);
+        empresa.setLlistaVehicles(vehicles);
+
+       return empresa;
     }
 
-    // public static void main(String[] args) {
+    public void saveJSON(Empresa empresa, String filePath) {
+    JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
 
-    //     List<Empleat> llistaEmpleats = new ArrayList<>();
-    //     List<Client> llistaClients = new ArrayList<>();
-    //     List<Vehicle> llistaVehicles = new ArrayList<>();
-    //     List<Lloguer> llistaLloguers = new ArrayList<>();
-    //     Empresa empresa = new Empresa();
+    // Guardar clientes
+    JsonArrayBuilder clientesArray = Json.createArrayBuilder();
+    for (Client client : empresa.getLlistaClients()) {
+        JsonObject clientJson = Json.createObjectBuilder(client.toJson()).build();
+        clientesArray.add(clientJson);
+    }
+    jsonBuilder.add("clientes", clientesArray);
 
-    //     // Agregar 10 Clientes
-    //     llistaClients.add(new Client("Home", "Marc", "Castro", "12345678Z", 1, 612345679, 32, 5, false));
-    //     llistaClients.add(new Client("Dona", "Elena", "Giménez", "23456789X", 2, 622345679, 29, 2, true));
-    //     llistaClients.add(new Client("Home", "Jordi", "Martínez", "34567890Y", 3, 632345679, 41, 7, false));
-    //     llistaClients.add(new Client("Dona", "Laura", "Fernández", "45678901W", 4, 642345679, 25, 3, false));
-    //     llistaClients.add(new Client("Home", "Pere", "Vilaplana", "56789012V", 5, 652345679, 38, 8, true));
-    //     llistaClients.add(new Client("Dona", "Maria", "Sánchez", "67890123U", 6, 662345679, 27, 1, false));
-    //     llistaClients.add(new Client("Home", "Albert", "Torres", "78901234T", 7, 672345679, 50, 10, true));
-    //     llistaClients.add(new Client("Dona", "Clara", "Ortega", "89012345S", 8, 682345679, 31, 6, false));
-    //     llistaClients.add(new Client("Home", "Ricard", "López", "90123456R", 9, 692345679, 45, 4, true));
-    //     llistaClients.add(new Client("Dona", "Sara", "Navarro", "01234567Q", 10, 602345679, 22, 2, false));
+    // Guardar empleados
+    JsonArrayBuilder empleatsArray = Json.createArrayBuilder();
+    for (Empleat empleat : empresa.getLlistaEmpleats()) {
+        JsonObject empleatJson = Json.createObjectBuilder(empleat.toJson()).build();
+        empleatsArray.add(empleatJson);
+    }
+    jsonBuilder.add("empleados", empleatsArray);
 
-    //     // Agregar 5 Empleados
-    //     llistaEmpleats.add(new Empleat("Home", "Francesc", "Puig", "12345678M", 1, 612345680, 45, "Venedor", 15, true));
-    //     llistaEmpleats.add(new Empleat("Dona", "Teresa", "Sola", "23456789N", 2, 622345680, 34, "Venedor", 8, true));
-    //     llistaEmpleats.add(new Empleat("Home", "Xavier", "Ferrer", "34567890P", 3, 632345680, 40, "Venedor", 12, true));
-    //     llistaEmpleats.add(new Empleat("Dona", "Núria", "Blasco", "45678901O", 4, 642345680, 28, "Venedor", 5, true));
-    //     llistaEmpleats.add(new Empleat("Home", "Joan", "Serra", "56789012N", 5, 652345680, 37, "Venedor", 10, true));
+    // Guardar vehículos
+    JsonArrayBuilder vehiclesArray = Json.createArrayBuilder();
+    for (Vehicle vehicle : empresa.getLlistaVehicles()) {
+        JsonObject vehicleJson = Json.createObjectBuilder(vehicle.toJson()).build();
+        vehiclesArray.add(vehicleJson);
+    }
+    jsonBuilder.add("vehiculos", vehiclesArray);
 
-    //     // Agregar 10 vehicles
-    //     llistaVehicles.add(new Vehicle(1, 50000, 10, "Toyota", "Cotxe", "1234ABC", 35.5f, false));
-    //     llistaVehicles.add(new Vehicle(2, 30000, 5, "Ford", "Cotxe", "2345BCD", 40.0f, true));
-    //     llistaVehicles.add(new Vehicle(3, 15000, 3, "BMW", "Cotxe", "3456CDE", 75.0f, false));
-    //     llistaVehicles.add(new Vehicle(4, 25000, 7, "Audi", "Cotxe", "4567DEF", 60.0f, true));
-    //     llistaVehicles.add(new Vehicle(5, 10000, 2, "Mercedes", "Cotxe", "5678EFG", 80.0f, false));
-    //     llistaVehicles.add(new Vehicle(6, 40000, 12, "Harley-Davidson", "Moto", "6789FGH", 30.0f, true));
-    //     llistaVehicles.add(new Vehicle(7, 5000, 1, "Yamaha", "Moto", "7890GHI", 45.0f, false));
-    //     llistaVehicles.add(new Vehicle(8, 20000, 4, "Kawasaki", "Moto", "8901HIJ", 50.0f, true));
-    //     llistaVehicles.add(new Vehicle(9, 60000, 15, "Suzuki", "Moto", "9012IJK", 55.0f, false));
-    //     llistaVehicles.add(new Vehicle(10, 8000, 2, "Honda", "Moto", "0123JKL", 32.5f, true));
+    // Guardar alquileres
+    JsonArrayBuilder lloguersArray = Json.createArrayBuilder();
+    for (Lloguer lloguer : empresa.getLlistaLloguers()) {
+        JsonObject lloguerJson = Json.createObjectBuilder(lloguer.toJson()).build();
+        lloguersArray.add(lloguerJson);
+    }
+    jsonBuilder.add("lloguers", lloguersArray);
 
-    //     // Crear 10 alquileres (Lloguer)
-    //     llistaLloguers.add(new Lloguer(1, llistaClients.get(0), llistaEmpleats.get(0), llistaVehicles.get(0), "2024-03-01", "2024-03-07"));
-    //     llistaLloguers.add(new Lloguer(2, llistaClients.get(1), llistaEmpleats.get(1), llistaVehicles.get(1), "2024-02-15", "2024-02-20"));
-    //     llistaLloguers.add(new Lloguer(3, llistaClients.get(2), llistaEmpleats.get(2), llistaVehicles.get(2), "2024-01-10", "2024-01-17"));
-    //     llistaLloguers.add(new Lloguer(4, llistaClients.get(3), llistaEmpleats.get(3), llistaVehicles.get(3), "2024-03-10", "2024-03-15"));
-    //     llistaLloguers.add(new Lloguer(5, llistaClients.get(4), llistaEmpleats.get(4), llistaVehicles.get(4), "2024-02-01", "2024-02-05"));
-    //     llistaLloguers.add(new Lloguer(6, llistaClients.get(5), llistaEmpleats.get(0), llistaVehicles.get(5), "2024-01-05", "2024-01-12"));
-    //     llistaLloguers.add(new Lloguer(7, llistaClients.get(6), llistaEmpleats.get(1), llistaVehicles.get(6), "2024-02-18", "2024-02-22"));
-    //     llistaLloguers.add(new Lloguer(8, llistaClients.get(7), llistaEmpleats.get(2), llistaVehicles.get(7), "2024-03-05", "2024-03-09"));
-    //     llistaLloguers.add(new Lloguer(9, llistaClients.get(8), llistaEmpleats.get(3), llistaVehicles.get(8), "2024-01-28", "2024-02-03"));
-    //     llistaLloguers.add(new Lloguer(10, llistaClients.get(9), llistaEmpleats.get(4), llistaVehicles.get(9), "2024-02-10", "2024-02-14"));
-
-    //     empresa.setLlistaClients(llistaClients);
-    //     empresa.setLlistaEmpleats(llistaEmpleats);
-    //     empresa.setLlistaLloguers(llistaLloguers);
-    //     empresa.setLlistaVehicles(llistaVehicles);
-
-    //     // Mostrar los clientes
-    //     System.out.println("=== Llista de Clients ===");
-    //     for (Client client : llistaClients) {
-    //         System.out.println(client.toString());
-    //     }
-
-    //     // Mostrar los empleados
-    //     System.out.println("=== Llista de Empleats ===");
-    //     for (Empleat empleat : llistaEmpleats) {
-    //         System.out.println(empleat.toString());
-    //     }
-
-    //     // Mostrar los vehículos
-    //     System.out.println("=== Llista de Vehicles ===");
-    //     for (Vehicle vehicle : llistaVehicles) {
-    //         System.out.println(vehicle.toString());
-    //     }
-
-    //     // Mostrar los alquileres
-    //     System.out.println("=== Llista de Lloguers ===");
-    //     for (Lloguer lloguer : llistaLloguers) {
-    //         System.out.println(lloguer.toString());
-    //     }
-
-    //     System.out.println("=== EMPRESA ===");
-    //     System.out.println(empresa);
-
-        
-    // }
-
-        /**
-     * Carrega els vehicles des del fitxer JSON.
-     *
-     * @return Llista de vehicles o null si hi ha hagut un error en la lectura.
-     */
-    public List<Vehicle> carregarVehicles() {
-    List<Vehicle> vehicles = new ArrayList<>();
-    try (JsonReader jsonReader = Json.createReader(new FileReader(dataFile))) {
-        JsonObject jsonObject = jsonReader.readObject(); // Lee el objeto JSON completo
-        JsonArray vehiclesArray = jsonObject.getJsonArray("vehiculos"); // Accede a la clave "vehiculos"
-
-        for (JsonObject vehicleObject : vehiclesArray.getValuesAs(JsonObject.class)) {
-            int id = vehicleObject.getInt("id");
-            int kilometratge = vehicleObject.getInt("kilometratge");
-            int vegades_llogat = vehicleObject.getInt("vegades_llogat");
-            String marca = vehicleObject.getString("marca");
-            String model = vehicleObject.getString("model");
-            String matricula = vehicleObject.getString("matricula");
-            Float preu_dia = (float) vehicleObject.getJsonNumber("preu_dia").doubleValue();
-            Boolean esta_llogat = vehicleObject.getBoolean("esta_llogat");
-
-            vehicles.add(new Vehicle(id, kilometratge, vegades_llogat, marca, model, matricula, preu_dia, esta_llogat));
-        }
+    // Guardar en archivo JSON
+    try (JsonWriter jsonWriter = Json.createWriter(Files.newBufferedWriter(Paths.get(dataFile.getParent(), "data.json")))) {
+        jsonWriter.writeObject(jsonBuilder.build());
     } catch (IOException e) {
         e.printStackTrace();
     }
-    return vehicles;
 }
+
 }
