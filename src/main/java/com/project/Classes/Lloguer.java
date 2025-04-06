@@ -106,9 +106,12 @@ public class Lloguer {
 
     @Override
     public String toString() {
-        return "Lloguer [id = " + id + ", dataInici = " + dataInici + ", dataFi = " + dataFi + ", vehicle = " + vehicle
-                + ", client = " + client +  ", empleat = " + empleat + ", preu_total = " + getPreu_total() + "]";
+        return String.format(
+            "Lloguer { id: %d, Data Inici: %s, Data Fi: %s, Vehicle: %s, Client: %s, Empleat: %s, Preu Total: %.2f }",
+            id, dataInici, dataFi, vehicle.getMatricula(), client.getDni(), empleat.getDni(), getPreu_total()
+        );
     }
+
 
 }
 

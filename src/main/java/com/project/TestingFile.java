@@ -53,7 +53,7 @@ public class TestingFile {
         System.out.println(empresa.getLlistaLloguers().size());
 
 
-        app.saveJSON(empresa);
+        // app.saveJSON(empresa);
 
     }
 
@@ -115,12 +115,16 @@ public class TestingFile {
                 ));
             }
 
+            System.out.println(clients);
+            System.out.println(vehicles);
+            System.out.println(empleats);
+
             // Cargar alquileres
             JsonArray lloguersArray = jsonObject.getJsonArray("lloguers");
             for (JsonObject lloguerObject : lloguersArray.getValuesAs(JsonObject.class)) {
                 Client client = null;
                 for (Client c : clients) {
-                    if (c.getDni().equals(lloguerObject.getString("client"))) {
+                    if (c.getId() == lloguerObject.getJsonObject("client").getInt("id")) { // Comparar por 'id'
                         client = c;
                         break;
                     }
@@ -128,7 +132,7 @@ public class TestingFile {
 
                 Empleat empleat = null;
                 for (Empleat e : empleats) {
-                    if (e.getDni().equals(lloguerObject.getString("empleat"))) {
+                    if (e.getId() == lloguerObject.getJsonObject("empleat").getInt("id")) { // Comparar por 'id'
                         empleat = e;
                         break;
                     }
@@ -136,7 +140,7 @@ public class TestingFile {
 
                 Vehicle vehicle = null;
                 for (Vehicle v : vehicles) {
-                    if (v.getMatricula().equals(lloguerObject.getString("vehicle"))) {
+                    if (v.getMatricula().equals(lloguerObject.getJsonObject("vehicle").getString("matricula"))) { // Comparar por 'matricula'
                         vehicle = v;
                         break;
                     }
@@ -153,6 +157,7 @@ public class TestingFile {
                     ));
                 }
             }
+
 
         } catch (IOException e) {
             e.printStackTrace();

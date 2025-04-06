@@ -88,9 +88,11 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return "Vehicle [id = " + id + ", kilometratge = " + kilometratge + ", vegades_llogat = " + vegades_llogat
-                + ", marca = " + marca + ", model = " + model + ", matricula = " + matricula + ", preu_dia = " + preu_dia
-                + ", esta_llogat = " + esta_llogat + "]";
+        return String.format(
+            "Vehicle { id: %d, Kilometratge: %d, Vegades Llogat: %d, Marca: %s, Model: %s, Matrícula: %s, Preu per Dia: %.2f, Esta llogat: %b }",
+            id, kilometratge, vegades_llogat, marca, model, matricula, preu_dia, esta_llogat
+        );
     }
+
 
 }

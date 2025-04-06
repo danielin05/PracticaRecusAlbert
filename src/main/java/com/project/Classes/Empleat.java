@@ -44,7 +44,10 @@ public class Empleat extends Persona{
 
     @Override
     public String toString() {
-        return "Empleat [id = " + id + ", sexe = " + sexe + ", nom = " + nom + ", cognom = " + cognom + ", dni = " + dni + ", num_telf = "
-                + num_telf + ", edat = " + edat + ", carrec = " + carrec + ", anys_empresa = " + anys_empresa + ", contractat = " + contractat + "]";
+        return String.format(
+            "Empleat { id: %d, Sexe: %s, Nom: %s, Cognom: %s, DNI: %s, Telèfon: %s, Edat: %d, Càrrec: %s, Anys a l'Empresa: %d, Contractat: %b }",
+            id, sexe, nom, cognom, dni, num_telf, edat, carrec, anys_empresa, contractat
+        );
     }
+
 }

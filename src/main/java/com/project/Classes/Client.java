@@ -38,8 +38,11 @@ public class Client extends Persona{
 
     @Override
     public String toString() {
-        return "Client [id = " + id + ", sexe = " + sexe + ", nom = " + nom + ", cognom = " + cognom + ", dni = " + dni + ", num_telf = "
-                + num_telf + ", edat = " + edat + ", te_lloguer = " + te_lloguer + ", vegades_lloguer = " + vegades_lloguer + "]";
+        return String.format(
+            "Client { id: %d, Sexe: %s, Nom: %s, Cognom: %s, DNI: %s, Telèfon: %s, Edat: %d, Té Lloguer: %b, Vegades Llogat: %d }",
+            id, sexe, nom, cognom, dni, num_telf, edat, te_lloguer, vegades_lloguer
+        );
     }
+    
     
 }
