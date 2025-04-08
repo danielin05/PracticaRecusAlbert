@@ -1,5 +1,8 @@
 package com.project.Classes;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class Persona {
     String sexe, nom, cognom, dni;
     int id, num_telf, edat;
@@ -8,15 +11,16 @@ public class Persona {
         this.id = id;
     };
 
-    public Persona(String sexe, String nom, String cognom, String dni, int id, int num_telf, int edat) {
-        this.sexe = sexe;
+    public Persona( int id, String nom, String cognom, String dni, String sexe, int edat, int num_telf) {
+        this.id = id;
         this.nom = nom;
         this.cognom = cognom;
         this.dni = dni;
-        this.id = id;
-        this.num_telf = num_telf;
+        this.sexe = sexe;
         this.edat = edat;
+        this.num_telf = num_telf;
     }
+
 
     public String getSexe() {
         return sexe;
@@ -59,6 +63,18 @@ public class Persona {
     }
     public void setEdat(int edat) {
         this.edat = edat;
+    }
+    
+    public Map<String, Object> toJson() {
+        Map<String, Object> json = new LinkedHashMap();
+        json.put("id", id);
+        json.put("nom", nom);
+        json.put("cognom", cognom);
+        json.put("dni", dni);
+        json.put("sexe", sexe);
+        json.put("edat", edat);
+        json.put("num_telf", num_telf);
+        return json;
     }
 
     @Override

@@ -1,11 +1,13 @@
 package com.project.Classes;
 
+import java.util.Map;
+
 public class Client extends Persona{
     int vegades_lloguer;
     boolean te_lloguer;
 
-    public Client(String sexe, String nom, String cognom, String dni, int id, int num_telf, int edat, int vegades_lloguer, boolean te_lloguer) {
-        super(sexe, nom, cognom, dni, id, num_telf, edat);
+    public Client(int id, String nom, String cognom, String dni, String sexe, int edat, int num_telf, int vegades_lloguer, boolean te_lloguer) {
+        super(id, nom, cognom, dni, sexe, edat, num_telf);
         this.vegades_lloguer = vegades_lloguer;
         this.te_lloguer = te_lloguer;
     }
@@ -27,10 +29,20 @@ public class Client extends Persona{
         vegades_lloguer++;
     }
     
+    public Map<String, Object> toJson() {
+        Map<String, Object> json = super.toJson(); // Llamamos al método de Persona
+        json.put("vegades_lloguer", vegades_lloguer);
+        json.put("te_lloguer", te_lloguer);
+        return json;
+    }
+
     @Override
     public String toString() {
-        return "Client [id = " + id + ", sexe = " + sexe + ", nom = " + nom + ", cognom = " + cognom + ", dni = " + dni + ", num_telf = "
-                + num_telf + ", edat = " + edat + ", te_lloguer = " + te_lloguer + ", vegades_lloguer = " + vegades_lloguer + "]";
+        return String.format(
+            "Client { id: %d, Sexe: %s, Nom: %s, Cognom: %s, DNI: %s, Telèfon: %s, Edat: %d, Té Lloguer: %b, Vegades Llogat: %d }",
+            id, sexe, nom, cognom, dni, num_telf, edat, te_lloguer, vegades_lloguer
+        );
     }
+    
     
 }

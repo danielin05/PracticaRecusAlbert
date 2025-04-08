@@ -1,16 +1,20 @@
 package com.project.Classes;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class Vehicle {
     int id, kilometratge, vegades_llogat;
     String marca, model, matricula;
-    float preu_dia;
+    double preu_dia;
     boolean esta_llogat;
 
     public Vehicle(int id){
         this.id = id;
     };
 
-    public Vehicle(int id, int kilometratge, int vegades_llogat, String marca, String model, String matricula, float preu_dia, boolean esta_llogat) {
+    public Vehicle(int id, int kilometratge, int vegades_llogat, String marca, String model, String matricula, double preu_dia, boolean esta_llogat) {
         this.id = id;
         this.kilometratge = kilometratge;
         this.vegades_llogat = vegades_llogat;
@@ -56,10 +60,10 @@ public class Vehicle {
     public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
-    public float getPreu_dia() {
+    public double getPreu_dia() {
         return preu_dia;
     }
-    public void setPreu_dia(float preu_dia) {
+    public void setPreu_dia(double preu_dia) {
         this.preu_dia = preu_dia;
     }
     public boolean isEsta_llogat() {
@@ -69,11 +73,26 @@ public class Vehicle {
         this.esta_llogat = esta_llogat;
     }
 
+    public Map<String, Object> toJson() {
+        Map<String, Object> json = new LinkedHashMap();
+        json.put("id", id);
+        json.put("kilometratge", kilometratge);
+        json.put("vegades_llogat", vegades_llogat);
+        json.put("marca", marca);
+        json.put("model", model);
+        json.put("matricula", matricula);
+        json.put("preu_dia", preu_dia);
+        json.put("esta_llogat", esta_llogat);
+        return json;
+    }
+
     @Override
     public String toString() {
-        return "Vehicle [id = " + id + ", kilometratge = " + kilometratge + ", vegades_llogat = " + vegades_llogat
-                + ", marca = " + marca + ", model = " + model + ", matricula = " + matricula + ", preu_dia = " + preu_dia
-                + ", esta_llogat = " + esta_llogat + "]";
+        return String.format(
+            "Vehicle { id: %d, Kilometratge: %d, Vegades Llogat: %d, Marca: %s, Model: %s, Matrícula: %s, Preu per Dia: %.2f, Esta llogat: %b }",
+            id, kilometratge, vegades_llogat, marca, model, matricula, preu_dia, esta_llogat
+        );
     }
+
 
 }
